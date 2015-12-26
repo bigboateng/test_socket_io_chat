@@ -9,7 +9,7 @@ var app = express();
 
 var users = require('./routes/user');
 
-var io = require('socket.io')(http.Server(app));
+
 
 var port = 1317 || process.env.PORT;
 var io = require('socket.io').listen(app.listen(port, function(){
