@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= title %></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	<link rel='stylesheet' href='/stylesheets/style.css' />
+	<style type="text/css">
+		form{
+			position: fixed;
+			bottom: 0;
+			width:100%;
+		}
+		form input{
+			width:90%;
+			margin-right: 0.5%
+		}
+		form button{
+			margin-right: 0.5%;
+		}
+	</style>
+</head>
+<body>
+	<div class="container-fliud">
+		<div class="row">
+			<div class="col-md-12">
+				<%= title %><hr>
+				<div class="list-group">
+					
+				</div>
+				<form class="formex" id="t" action="">
+					<div class="form-group">
+						<input id="m">
+						<button id="send" class="btn btn-primary">Send</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+	var socket = io();
+	$('#t').submit(function(){
+		socket.emit('chat message', $('#m').val());
+		$('#m').val("");
+		return false;
+	});
+
+	socket.on('chat message', function(msg){
+		addMessage(msg, 'Anon')
+		console.log(msg);
+	});
+
+	function addMessage(msg, from){
+		 $('.list-group').append('<li class="list-group-item"><h4>From: '+from+'</h4><p>'+msg+'</p></li>');
+	}
+
+</script>
+</html>
